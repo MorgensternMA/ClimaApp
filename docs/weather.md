@@ -13,8 +13,10 @@ Obtiene datos meteorológicos actuales, diarios y horarios para una ubicación e
 
 #### Parámetros de Consulta
 
-- **latitude** (requerido): Latitud de la ubicación.
-- **longitude** (requerido): Longitud de la ubicación.
+- **latitude**: Latitud de la ubicación.
+- **longitude**: Longitud de la ubicación.
+
+De no ser especificados tomaran el 0 como valor predeterminado.
 
 #### Respuesta Exitosa (200 OK)
 
