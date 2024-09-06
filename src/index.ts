@@ -14,6 +14,4 @@ app.use(logging);
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-app.listen({
-  port: 3000,
-});
+await app.listen({ port: 3000, hostname: "0.0.0.0" });

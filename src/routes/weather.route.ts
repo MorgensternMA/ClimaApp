@@ -4,6 +4,12 @@ import { transformWeatherData } from "../services/weather";
 
 export async function getWeather(ctx: Context) {
 
+  if (!ctx.state.api_key_id) {
+    ctx.response.status = 401;
+    ctx.response.body = JSON.stringify({ error: "unauthorized" });
+    return;
+  }
+
   const lat = Number(ctx.request.url.searchParams.get("latitude"));
   const lon = Number(ctx.request.url.searchParams.get("longitude"));
 

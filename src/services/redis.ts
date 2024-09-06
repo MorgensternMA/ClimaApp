@@ -5,14 +5,20 @@ redisClient.on("error", (err) => console.log("Redis Client Error", err));
 let connected = false;
 
 export const Redis = {
-  async set(key: string, value: any): Promise<void> {
+  async set(key: string, value: any, nx: boolean = true): Promise<void> {
     if (!connected) {
       await redisClient.connect();
       connected = true;
     }
 
-    await redisClient.set(key, value, {} as SetOptions);
-  },
+    const setOptions: SetOptions = {};
+    if (nx) {
+      setOptions.NX = true;
+    }
+
+    await redisClient.set(key, value, setOptions);
+  },
+
   async get(key: string): Promise<any> {
     if (!connected) {
       await redisClient.connect();

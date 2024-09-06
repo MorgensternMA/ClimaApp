@@ -20,17 +20,27 @@ export async function logging(context: Context, next: Next): Promise<void> {
             await Redis.set(apiKey, apiKeyRecord?.id);
         }
     }
+    try {
     await prisma.log.create({
-    data: {
+        data: {
         endpoint: context.request.url.pathname,
         ip_address: ip,
         headers: Object.fromEntries(context.request.headers),
         query_params: Object.fromEntries(context.request.url.searchParams),
-        ...(cachedApiKey && { api_key_id: parseInt(cachedApiKey, 10) })
-    },
+        api_key_id: parseInt(cachedApiKey, 10),
+        },
     });
-
     context.state.api_key_id = cachedApiKey;
+    } catch (_) {
+    await prisma.log.create({
+        data: {
+        endpoint: context.request.url.pathname,
+        ip_address: ip,
+        headers: Object.fromEntries(context.request.headers),
+        query_params: Object.fromEntries(context.request.url.searchParams),
+      },
+    });
+  }
 
     await next();
 }

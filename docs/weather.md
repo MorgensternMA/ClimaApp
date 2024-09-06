@@ -18,7 +18,7 @@ Obtiene datos meteorológicos actuales, diarios y horarios para una ubicación e
 
 #### Respuesta Exitosa (200 OK)
 
-    ```json
+```json
     {
     "2024-09-06": {
         "daily": {
@@ -50,11 +50,13 @@ Obtiene datos meteorológicos actuales, diarios y horarios para una ubicación e
     },
     // Más datos por los siguientes 7 días...
     }
+```
 
 #### Respuesta de Error (400 Bad Request)
 
-    ```json
+```json
     ctx.response.body = { error: "Latitud y longitud deben ser números válidos dentro del rango permitido." }
+```
 
 ### 2. Registrar Clave API
 #### *`GET /register`*
@@ -65,19 +67,21 @@ No es necesario incluir datos en el cuerpo de la solicitud.
 
 #### Respuesta Exitosa (200 OK)
 
-    ```json
+```json
     {
     "message": "API key creada    exitosamente.",
     "apiKey": "kThEJg7TfDj12_ovhXuk8"
     }
+```
 
 #### Respuesta de Error (500)
 
-    ```json
+```json
     {
         "message": "Error desconocido al procesar la solicitud."
     }
+```
 
 ## Autenticación
 ### Headers
-+ `API-KEY` (opcional): Clave API para acceder a los datos. Si no se proporciona, los datos pueden estar disponibles y se tomara la IP.
++ `API-KEY` : Clave API para acceder a los datos. Si no se proporciona, los datos pueden no estar disponibles.

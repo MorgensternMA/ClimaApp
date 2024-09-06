@@ -20,29 +20,37 @@ Este proyecto es una API web desarrollada en typescript que actúa como un inter
 - Node.js
 - Prisma ORM
 - Redis
-- Open-Meteo API Key
+- Open-Meteo
 
 ## Instalación
 
 1. **Clonar el Repositorio:**
 
-   ```bash
+```bash
    git clone https://github.com/MorgensternMA/ClimaApp.git
+```
    
 2. **Clonar el Repositorio:**
 
-   ```bash
+```bash
    npm i
+```
 
 3. **Configura el entorno**
 
-   ```.env
+```.env
    DATABASE_URL="mysql://root:bdSe098x7I@localhost:3306/weather_db"
+```
 
 4. **Construir y ejecutar los contenedores**
 
-   ```bash
+```bash
    docker-compose up --build -d
+```
+
+```bash
+   docker-compose exec api npm run migrate
+```
 
 
 ## Configuración

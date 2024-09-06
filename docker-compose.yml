@@ -5,10 +5,6 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - DB_HOST=mariadb
-      - DB_USER=root
-      - DB_PASSWORD=bdSe098x7I
-      - DB_NAME=weather_db
       - REDIS_HOST=redis
       - REDIS_PORT=6379
     depends_on:
