@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model api_key {
+  id          Int   @id @default(autoincrement())
+  key         String   @unique
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  is_active   Boolean  @default(true)
+  requests    weather_request[]
+  logs        log[]
+
+  @@map("api_keys")
+}
+
+model weather_request {
+  id          Int   @id  @default(autoincrement())
+  location    String
+  response    Json
+  created_at  DateTime @default(now())
+  api_key     api_key?  @relation(fields: [api_key_id], references: [id])
+  api_key_id  Int?
+
+  @@map("weather_requests")
+}
+
+model log {
+  id           Int   @id  @default(autoincrement())
+  endpoint     String
+  ip_address   String
+  headers      Json
+  query_params Json
+  created_at   DateTime @default(now())
+  api_key      api_key?  @relation(fields: [api_key_id], references: [id])
+  api_key_id   Int?
+
+  @@map("logs")
+}
+
+model cache {
+  id          Int   @id  @default(autoincrement())
+  location    String
+  response    Json
+  created_at  DateTime @default(now())
+  expires_at  DateTime
+
+  @@map("cache")
+}
