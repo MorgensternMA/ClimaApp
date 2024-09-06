@@ -12,35 +12,35 @@ export async function logging(context: Context, next: Next): Promise<void> {
 
         if (!cachedApiKey) {
             const apiKeyRecord = await prisma.api_key.findUnique({
-            where: {
-                key: apiKey,
-            },
+                where: {
+                    key: apiKey,
+                },
             });
             cachedApiKey = apiKeyRecord?.id;
             await Redis.set(apiKey, apiKeyRecord?.id);
         }
     }
-    try {
-    await prisma.log.create({
-        data: {
-        endpoint: context.request.url.pathname,
-        ip_address: ip,
-        headers: Object.fromEntries(context.request.headers),
-        query_params: Object.fromEntries(context.request.url.searchParams),
-        api_key_id: parseInt(cachedApiKey, 10),
-        },
-    });
-    context.state.api_key_id = cachedApiKey;
-    } catch (_) {
-    await prisma.log.create({
-        data: {
-        endpoint: context.request.url.pathname,
-        ip_address: ip,
-        headers: Object.fromEntries(context.request.headers),
-        query_params: Object.fromEntries(context.request.url.searchParams),
-      },
-    });
-  }
 
+    try {
+        await prisma.log.create({
+            data: {
+                endpoint: context.request.url.pathname,
+                ip_address: ip,
+                headers: Object.fromEntries(context.request.headers),
+                query_params: Object.fromEntries(context.request.url.searchParams),
+                api_key_id: parseInt(cachedApiKey, 10),
+            },
+        });
+        context.state.api_key_id = cachedApiKey;
+    } catch (_) {
+        await prisma.log.create({
+            data: {
+                endpoint: context.request.url.pathname,
+                ip_address: ip,
+                headers: Object.fromEntries(context.request.headers),
+                query_params: Object.fromEntries(context.request.url.searchParams),
+            },
+        });
+    }
     await next();
 }

@@ -17,7 +17,7 @@ export const Redis = {
     }
 
     await redisClient.set(key, value, setOptions);
-  },
+  },
 
   async get(key: string): Promise<any> {
     if (!connected) {

@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 import prisma from "../services/prisma";
 
 export async function postRegister(ctx: Context) {
-  try{
+  try {
     const apiKey = nanoid();
 
     const newApiKey = await prisma.api_key.create({
@@ -13,13 +13,13 @@ export async function postRegister(ctx: Context) {
     });
     ctx.response.status = 201;
     ctx.response.body = {
-      message: "API key creada exitosamente.",
+      message: "API successfully created.",
       apiKey: newApiKey.key,
     };
   } catch (error) {
     ctx.response.status = 500;
     ctx.response.body = {
-      error: error instanceof Error ? error.message : "Error desconocido al procesar la solicitud.",
+      error: error instanceof Error ? error.message : "Unknown error processing the request.",
     };
   }
 }

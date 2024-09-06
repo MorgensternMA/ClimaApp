@@ -55,7 +55,7 @@ Obtiene datos meteorológicos actuales, diarios y horarios para una ubicación e
 #### Respuesta de Error (400 Bad Request)
 
 ```json
-    ctx.response.body = { error: "Latitud y longitud deben ser números válidos dentro del rango permitido." }
+    { "message": "Latitude and longitude must be valid numbers within the allowed range." }
 ```
 
 ### 2. Registrar Clave API
@@ -69,7 +69,7 @@ No es necesario incluir datos en el cuerpo de la solicitud.
 
 ```json
     {
-    "message": "API key creada    exitosamente.",
+    "message": "API successfully created.",
     "apiKey": "kThEJg7TfDj12_ovhXuk8"
     }
 ```
@@ -78,7 +78,7 @@ No es necesario incluir datos en el cuerpo de la solicitud.
 
 ```json
     {
-        "message": "Error desconocido al procesar la solicitud."
+        "message": "Unknown error processing the request."
     }
 ```
 

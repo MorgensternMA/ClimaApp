@@ -6,16 +6,16 @@ export async function getWeather(ctx: Context) {
 
   if (!ctx.state.api_key_id) {
     ctx.response.status = 401;
-    ctx.response.body = JSON.stringify({ error: "unauthorized" });
-    return;
-  }
+    ctx.response.body = JSON.stringify({ error: "unauthorized." });
+    return;
+  }
 
-  const lat = Number(ctx.request.url.searchParams.get("latitude"));
-  const lon = Number(ctx.request.url.searchParams.get("longitude"));
+  const lat = Number(ctx.request.url.searchParams.get("latitude")) ?? NaN;
+  const lon = Number(ctx.request.url.searchParams.get("longitude")) ?? NaN;
 
   if (!isValidCoordinates(lat, lon)) {
     ctx.response.status = 400;
-    ctx.response.body = { error: "Latitud y longitud deben ser números válidos dentro del rango permitido." };
+    ctx.response.body = { error: "Latitude and longitude must be valid numbers within the allowed range." };
     return;
   }
 
@@ -49,14 +49,13 @@ export async function getWeather(ctx: Context) {
     ctx.response.status = 200;
     ctx.response.body = JSON.stringify(transformWeatherData(weatherData as any), null, 2);
   } catch (error) {
-    // Manejo del error
     if (error instanceof Error) {
       ctx.response.status = 500;
       ctx.response.body = { error: error.message };
     } else {
       ctx.response.status = 500;
       ctx.response.body = {
-        error: "Error desconocido al procesar la solicitud.",
+        error: "Unknown error processing the request.",
       };
     }
   }
@@ -64,8 +63,8 @@ export async function getWeather(ctx: Context) {
 
 function isValidCoordinates(lat: number, lon: number): boolean {
   return !isNaN(lat) && !isNaN(lon) &&
-        lat >= -90 && lat <= 90 &&
-        lon >= -180 && lon <= 180;
+    lat >= -90 && lat <= 90 &&
+    lon >= -180 && lon <= 180;
 }
 
 
@@ -75,7 +74,7 @@ const getWeatherData = async (latitude: number, longitude: number) => {
     `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,precipitation_probability,wind_speed_10m,soil_moisture_1_to_3cm&daily=temperature_2m_max,temperature_2m_min,daylight_duration`
   );
   if (!response.ok) {
-    throw new Error("Error al obtener los datos meteorológicos");
+    throw new Error("Error retrieving weather data.");
   }
   return response.json();
 };
