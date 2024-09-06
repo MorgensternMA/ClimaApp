@@ -1,0 +1,36 @@
+version: "3.9"
+services:
+  api:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=mariadb
+      - DB_USER=root
+      - DB_PASSWORD=bdSe098x7I
+      - DB_NAME=weather_db
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - mariadb
+      - redis
+  mariadb:
+    image: mariadb
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: bdSe098x7I
+      MYSQL_DATABASE: weather_db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: bdSe098x7I
+    volumes:
+      - weather-data:/var/lib/mysql
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379"
+volumes:
+  weather-data:
+

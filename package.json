@@ -1,0 +1,28 @@
+{
+  "name": "climaapp",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "vite-node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@oakserver/oak": "^14.1.0",
+    "@prisma/client": "^5.19.1",
+    "nanoid": "^5.0.7",
+    "openmeteo": "^1.1.4",
+    "redis": "^4.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "prisma": "^5.19.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.0.0",
+    "vite-node": "^2.0.5"
+  }
+}
